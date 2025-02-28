@@ -2,7 +2,7 @@
 
 Vue 3 PDF viewer based on Mozilla's PDFJS. Forked from https://github.com/sandanat/VuePdfApp.
 
-[![npm (tag)](https://img.shields.io/npm/v/vue3-pdf-app/latest)](https://www.npmjs.com/package/vue3-pdf-app)
+[![npm (tag)](https://img.shields.io/npm/v/@jackmartin/vue3-pdf-app/latest)](https://www.npmjs.com/package/@jackmartin/vue3-pdf-app)
 
 100% PDFJS functionality:
 
