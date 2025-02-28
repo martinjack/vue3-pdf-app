@@ -1,13 +1,13 @@
 {
-  "name": "vue3-pdf-app",
-  "version": "1.0.3",
+  "name": "@jackmartin/vue3-pdf-app",
+  "version": "1.0.0",
   "description": "Vue 3 PDF viewer",
   "main": "dist/vue3-pdf-app.umd.js",
   "unpkg": "dist/vue3-pdf-app.umd.min.js",
   "types": "./dist/types/components/pdf-viewer.vue.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stellR42/vue3-pdf-app"
+    "url": "git+https://github.com/martinjack/vue3-pdf-app"
   },
   "files": [
     "dist"
@@ -19,22 +19,18 @@
     "pdf",
     "viewer"
   ],
-  "author": "stellR42",
+  "author": "martinjack",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/stellR42/vue3-pdf-app/issues"
-  },
-  "homepage": "https://github.com/stellR42/vue3-pdf-app#readme",
+  "homepage": "https://github.com/martinjack/vue3-pdf-app#readme",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build:lib": "vue-cli-service build --target lib src/components/pdf-viewer.vue && npm run build:types",
+    "build:lib": "vue-cli-service build --target lib --mode production src/components/pdf-viewer.vue && npm run build:types",
     "build:icons": "webpack --config webpack-icons.config.js",
     "build:types": "vue-tsc --build tsconfig.lib.json",
-    "build:npm": "npm run build:lib & npm run build:icons",
+    "build:npm": "npm run build:lib && npm run build:icons",
     "lint": "vue-cli-service lint"
   },
-  "dependencies": {},
   "peerDependencies": {
     "vue": "^3.0.0"
   },

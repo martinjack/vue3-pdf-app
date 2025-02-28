@@ -1,7 +1,9 @@
 <template>
   <pdf-viewer
     :pdf="pdf"
+    :config="config"
     :page-number="2"
+    :locale="locale"
     @after-created="afterCreated"
     @open="open"
     @pages-rendered="pagesRendered"
@@ -17,14 +19,14 @@
 </template>
 
 <script lang="ts">
-import PdfViewer from '@/components/pdf-viewer.vue'
-import { defineComponent } from 'vue'
+import PdfViewer from "@/components/pdf-viewer.vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   components: {
-    PdfViewer
+    PdfViewer,
   },
-  data () {
+  data() {
     return {
       config: {
         // toolbar: {
@@ -33,23 +35,24 @@ export default defineComponent({
         //   },
         // },
       },
-      scale: '1',
-      pdf: '/sample.pdf'
-    }
+      scale: "1",
+      pdf: "/sample.pdf",
+      locale: "en",
+    };
   },
   methods: {
-    afterCreated (pdfApp) {
+    afterCreated(pdfApp) {
       // window._pdfApp = pdfApp
-      console.log('===***=== After created')
+      console.log("===***=== After created");
     },
-    open () {
-      console.log('===***=== Opened')
+    open() {
+      console.log("===***=== Opened");
     },
-    pagesRendered () {
-      console.log('===***=== Pages rendered')
-    }
-  }
-})
+    pagesRendered() {
+      console.log("===***=== Pages rendered");
+    },
+  },
+});
 </script>
 
 <style lang="scss" scoped>

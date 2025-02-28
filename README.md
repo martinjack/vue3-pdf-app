@@ -1,6 +1,6 @@
 # Vue3 Pdf App
 
-Vue 3 PDF viewer based on Mozilla's PDFJS. Forked from https://github.com/sandanat/vue-pdf-app.
+Vue 3 PDF viewer based on Mozilla's PDFJS. Forked from https://github.com/sandanat/VuePdfApp.
 
 [![npm (tag)](https://img.shields.io/npm/v/vue3-pdf-app/latest)](https://www.npmjs.com/package/vue3-pdf-app)
 
@@ -16,37 +16,37 @@ Vue 3 PDF viewer based on Mozilla's PDFJS. Forked from https://github.com/sandan
 - pdf document password
 - thumbnail, outline, attachments, annotation layers
 
-Easily localized configurable toolbar
+### Easily localized configurable toolbar
 
-Toolbar custom UI
+### Toolbar custom UI
 
-Cross-browser support
+### Cross-browser support
 
-Color customization
+### Color customization
 
-Buttons icons customization
+### Buttons icons customization
 
-Light/dark themes
+### Light/dark themes
 
-Built-in typescript support
+### Built-in typescript support
 
 ![pdf sample](./readme/sample.png "Pdf expample")
 
 [Live demo](https://codesandbox.io/s/vue3-pdf-app-wnh9zs?file=/src/App.vue)
 
-[FAQ](https://github.com/stellr42/vue3-pdf-app/blob/master/FAQ.md)
+[FAQ](https://github.com/martinjack/vue3-pdf-app/blob/master/FAQ.md)
 
 ## Installation
 ```
-npm install vue3-pdf-app
+npm install @jackmartin/vue3-pdf-app
 ```
 ## Usage
 
 ```vue
 <template>
-  <!-- used `style="height: 100vh;"` because without it in the Firefox 89 and Chrome 91 (June 2021) the `vue-pdf-app` is not rendering on the page, just empty space without any errors (since `vue-pdf-app` does not have height and it is the top tag in the generated markup ) -->
-  <!-- or you can just wrap `vue-pdf-app` in <div> tag and set height for it via CSS (like in `Script tag (unpkg)` example below) -->
-  <vue-pdf-app style="height: 100vh;" pdf="https://file-examples-com.github.io/uploads/2017/10/file-example_PDF_1MB.pdf"></vue-pdf-app>
+  <!-- used `style="height: 100vh;"` because without it in the Firefox 89 and Chrome 91 (June 2021) the `VuePdfApp` is not rendering on the page, just empty space without any errors (since `VuePdfApp` does not have height and it is the top tag in the generated markup ) -->
+  <!-- or you can just wrap `VuePdfApp` in <div> tag and set height for it via CSS (like in `Script tag (unpkg)` example below) -->
+  <VuePdfApp style="height: 100vh;" pdf="https://pdfobject.com/pdf/sample.pdf"/>
 </template>
 
 <script>
@@ -62,6 +62,44 @@ export default {
 </script>
 ```
 
+## Usage config
+
+```vue
+<template>
+  <!-- used `style="height: 100vh;"` because without it in the Firefox 89 and Chrome 91 (June 2021) the `VuePdfApp` is not rendering on the page, just empty space without any errors (since `VuePdfApp` does not have height and it is the top tag in the generated markup ) -->
+  <!-- or you can just wrap `VuePdfApp` in <div> tag and set height for it via CSS (like in `Script tag (unpkg)` example below) -->
+  <VuePdfApp style="height: 100vh;" pdf="https://pdfobject.com/pdf/sample.pdf" :config="config"/>
+</template>
+
+<script>
+import VuePdfApp from "vue3-pdf-app";
+// import this to use default icons for buttons
+import "vue3-pdf-app/dist/icons/main.css";
+
+export default {
+  components: {
+    VuePdfApp
+  },
+  data() {
+    return {
+      config: {
+        sidebar: false,
+        secondaryToolbar: false,
+        toolbar: {
+            toolbarViewerLeft: false,
+            toolbarViewerRight: {
+                openFile: false,
+                viewBookmark: false,
+            },
+            secondaryToolbarToggle: false,
+        },
+      }
+    };
+  }
+};
+</script>
+```
+
 ## API
 
 ### :pdf
@@ -71,8 +109,8 @@ export default {
 - Usage:
 
 ```vue
-<vue-pdf-app pdf="https://example.com/sample.pdf" />
-<vue-pdf-app :pdf="ArrayBuffer" />
+<VuePdfApp pdf="https://example.com/sample.pdf" />
+<VuePdfApp :pdf="ArrayBuffer" />
 ```
 
 ### :title
@@ -84,7 +122,7 @@ export default {
 - Usage:
 
 ```vue
-<vue-pdf-app :title="true" />
+<VuePdfApp :title="true" />
 ```
 
 ### :theme.sync
@@ -94,9 +132,9 @@ export default {
 - Usage:
 
 ```vue
-<vue-pdf-app theme="dark" />
-<vue-pdf-app :theme="theme" />
-<vue-pdf-app :theme.sync="theme" />
+<VuePdfApp theme="dark" />
+<VuePdfApp :theme="theme" />
+<VuePdfApp :theme.sync="theme" />
 ```
 
 ### :fileName
@@ -107,7 +145,7 @@ export default {
 - Usage:
 
 ```vue
-<vue-pdf-app :pdf="ArrayBuffer" file-name="file name" />
+<VuePdfApp :pdf="ArrayBuffer" file-name="file name" />
 ```
 
 ### :pageScale
@@ -119,9 +157,9 @@ export default {
 
 ```vue
 // 20%
-<vue-pdf-app page-scale="20" />
-<vue-pdf-app :page-scale="20" />
-<vue-pdf-app :page-scale="page-actual" />
+<VuePdfApp page-scale="20" />
+<VuePdfApp :page-scale="20" />
+<VuePdfApp :page-scale="page-actual" />
 ```
 
 ### :pageNumber
@@ -132,7 +170,15 @@ export default {
 - Usage:
 
 ```vue
-<vue-pdf-app :page-number="1" />
+<VuePdfApp :page-number="1" />
+```
+
+## :locale
+
+- Support: [en, uk]
+
+```vue
+<VuePdfApp :locale="'en'"/>
 ```
 
 ### :config
@@ -144,7 +190,7 @@ export default {
 - Usage:
 
 ```vue
-<vue-pdf-app :config="config" />
+<VuePdfApp :config="config" />
 
 <script>
 export default {
@@ -237,7 +283,7 @@ export default {
 
 ### :id-config
 
-- Description: If default toolbar UI doesn't suit you it is possible to build custom toolbar. The prop contains elements ID to which to bind functionality. If element ID is specified in this prop appropriate button will be hidden in a default toolbar. May not work with UI framework components. That is because pdfjs internally manages attributes specific to a certain HTML element (for instance pdfjs toggles `disabled` attribute of a button but it won't if a div is used instead of a button). So it is better to use native HTML element specified as recommended in ID config specification below. Four slots are specially designed to build custom toolbar (are situated near a pdf page): `viewer-header, viewer-prepend, viewer-append, viewer-footer` (refer slots API). It is also possible to use other slots or elements outside vue-pdf-app.
+- Description: If default toolbar UI doesn't suit you it is possible to build custom toolbar. The prop contains elements ID to which to bind functionality. If element ID is specified in this prop appropriate button will be hidden in a default toolbar. May not work with UI framework components. That is because pdfjs internally manages attributes specific to a certain HTML element (for instance pdfjs toggles `disabled` attribute of a button but it won't if a div is used instead of a button). So it is better to use native HTML element specified as recommended in ID config specification below. Four slots are specially designed to build custom toolbar (are situated near a pdf page): `viewer-header, viewer-prepend, viewer-append, viewer-footer` (refer slots API). It is also possible to use other slots or elements outside VuePdfApp.
 - Type: `ID config (see below)`
 - Required: `false`
 - Usage:
@@ -246,13 +292,13 @@ export default {
 <template>
   <div>
     <button :id="idConfig.zoomOut" type="button">Zoom out</button>
-    <vue-pdf-app :id-config="idConfig">
+    <VuePdfApp :id-config="idConfig">
       <template #viewer-prepend>
         <div class="viewer-prepend">
           <button :id="idConfig.zoomIn" type="button">Zoom in</button>
         </div>
       </template>
-    </vue-pdf-app>
+    </VuePdfApp>
   </div>
 </template>
 
@@ -317,7 +363,7 @@ zoomOut?: string; // &lt;button&gt; tag is recommended
 </code>
 </details>
 
-> ℹ️ Note that elements must be in HTML document by the time vue-pdf-app is mounting (use `v-show` instead of `v-if` directive if necessary). Otherwise an error occurs.
+> ℹ️ Note that elements must be in HTML document by the time VuePdfApp is mounting (use `v-show` instead of `v-if` directive if necessary). Otherwise an error occurs.
 
 ### @after-created(PDFViewerApplication)
 
@@ -327,7 +373,7 @@ zoomOut?: string; // &lt;button&gt; tag is recommended
 - Usage:
 
 ```vue
-<vue-pdf-app @after-created="afterCreated" />
+<VuePdfApp @after-created="afterCreated" />
 ```
 
 ### @open(PDFViewerApplication)
@@ -338,7 +384,7 @@ zoomOut?: string; // &lt;button&gt; tag is recommended
 - Usage:
 
 ```vue
-<vue-pdf-app @open="openHandler" />
+<VuePdfApp @open="openHandler" />
 ```
 
 ### @pages-rendered(PDFViewerApplication)
@@ -349,7 +395,7 @@ zoomOut?: string; // &lt;button&gt; tag is recommended
 - Usage:
 
 ```vue
-<vue-pdf-app @pages-rendered="pagesRendered" />
+<VuePdfApp @pages-rendered="pagesRendered" />
 
 <script>
 export default {
@@ -407,11 +453,11 @@ Each slot has props:
    Description: state of a findbar (visible or hidden). Can be used to manage visibility of custom findbar
 
 ```vue
-<vue-pdf-app>
+<VuePdfApp>
   <template #toolbar-left-prepend="{ toggleTheme }">
     <button @click="toggleTheme" type="button">Toggle theme</button>
   </template>
-</vue-pdf-app>
+</VuePdfApp>
 ```
 
 ## Color customization
@@ -709,15 +755,15 @@ Colors of the pdf viewer are customized via custom css properties:
 
 To use default icons `import "vue3-pdf-app/dist/icons/main.css";`.
 
-To use custom icons you have to implement [icons.css](https://github.com/sandanat/vue-pdf-app/blob/master/src/sass/icons.scss):
+To use custom icons you have to implement [icons.css](https://github.com/sandanat/VuePdfApp/blob/master/src/sass/icons.scss):
 
 ```css
-.vue-pdf-app-icon::before,
-.vue-pdf-app-icon::after {
+.VuePdfApp-icon::before,
+.VuePdfApp-icon::after {
   font-family: "your font family";
 }
 
-.vue-pdf-app-icon.zoom-out::before {
+.VuePdfApp-icon.zoom-out::before {
   content: "icon code";
 }
 ```
@@ -734,11 +780,11 @@ It's up to you to decide where to place it.
 The button can be implemented with slots:
 
 ```vue
-<vue-pdf-app>
+<VuePdfApp>
   <template #footer="{ toggleTheme }">
     <button @click="toggleTheme" type="button">Toggle theme</button>
   </template>
-</vue-pdf-app>
+</VuePdfApp>
 ```
 
 ## Localized panel
@@ -756,7 +802,7 @@ So use lazy loading to split your bundle into small pieces.
 ```vue
 <template>
   <div id="app">
-    <vue-pdf-app></vue-pdf-app>
+    <VuePdfApp></VuePdfApp>
   </div>
 </template>
 
@@ -767,10 +813,10 @@ import Loader from "./components/Loader.vue";
 export default {
   name: "App",
   components: {
-    "vue-pdf-app": () => ({
+    "VuePdfApp": () => ({
       component: new Promise((res) => {
         return setTimeout(
-          () => res(import(/* webpackChunkName: "pdf-viewer" */ "vue-pdf-app")),
+          () => res(import(/* webpackChunkName: "pdf-viewer" */ "VuePdfApp")),
           4000
         );
       }),
@@ -789,7 +835,7 @@ You can interact with pdfjs library when pdf is opened via `open` event.
 <template>
   <div id="app">
     <div id="pdf-wrapper">
-      <vue-pdf-app pdf="/sample.pdf" @open="openHandler"></vue-pdf-app>
+      <VuePdfApp pdf="/sample.pdf" @open="openHandler"></VuePdfApp>
     </div>
     <div id="info">
       <h1>PDF info:</h1>

@@ -226,10 +226,10 @@
             <div
               v-if="
                 showElem('secondaryToolbar.secondaryPresentationMode') ||
-                  showElem('secondaryToolbar.secondaryOpenFile') ||
-                  showElem('secondaryToolbar.secondaryPrint') ||
-                  showElem('secondaryToolbar.secondaryDownload') ||
-                  showElem('secondaryToolbar.secondaryViewBookmark')
+                showElem('secondaryToolbar.secondaryOpenFile') ||
+                showElem('secondaryToolbar.secondaryPrint') ||
+                showElem('secondaryToolbar.secondaryDownload') ||
+                showElem('secondaryToolbar.secondaryViewBookmark')
               "
               class="horizontalToolbarSeparator visibleLargeView"
             ></div>
@@ -258,7 +258,7 @@
             <div
               v-if="
                 showElem('secondaryToolbar.lastPage', 'lastPage') ||
-                  showElem('secondaryToolbar.firstPage', 'firstPage')
+                showElem('secondaryToolbar.firstPage', 'firstPage')
               "
               class="horizontalToolbarSeparator"
             ></div>
@@ -291,7 +291,7 @@
             <div
               v-if="
                 showElem('secondaryToolbar.pageRotateCcw', 'pageRotateCcw') ||
-                  showElem('secondaryToolbar.pageRotateCw', 'pageRotateCw')
+                showElem('secondaryToolbar.pageRotateCw', 'pageRotateCw')
               "
               class="horizontalToolbarSeparator"
             ></div>
@@ -329,10 +329,10 @@
             <div
               v-if="
                 showElem('secondaryToolbar.cursorHandTool', 'cursorHandTool') ||
-                  showElem(
-                    'secondaryToolbar.cursorSelectTool',
-                    'cursorSelectTool'
-                  )
+                showElem(
+                  'secondaryToolbar.cursorSelectTool',
+                  'cursorSelectTool'
+                )
               "
               class="horizontalToolbarSeparator"
             ></div>
@@ -385,11 +385,11 @@
               class="horizontalToolbarSeparator scrollModeButtons"
               v-if="
                 showElem('secondaryToolbar.scrollWrapped', 'scrollWrapped') ||
-                  showElem(
-                    'secondaryToolbar.scrollHorizontal',
-                    'scrollHorizontal'
-                  ) ||
-                  showElem('secondaryToolbar.scrollVertical', 'scrollVertical')
+                showElem(
+                  'secondaryToolbar.scrollHorizontal',
+                  'scrollHorizontal'
+                ) ||
+                showElem('secondaryToolbar.scrollVertical', 'scrollVertical')
               "
             ></div>
 
@@ -427,8 +427,8 @@
             <div
               v-if="
                 showElem('secondaryToolbar.spreadEven', 'spreadEven') ||
-                  showElem('secondaryToolbar.spreadOdd', 'spreadOdd') ||
-                  showElem('secondaryToolbar.spreadNone', 'spreadNone')
+                showElem('secondaryToolbar.spreadOdd', 'spreadOdd') ||
+                showElem('secondaryToolbar.spreadNone', 'spreadNone')
               "
               class="horizontalToolbarSeparator spreadModeButtons"
             ></div>
@@ -510,10 +510,10 @@
                   <div
                     v-if="
                       showElem('toolbar.toolbarViewerLeft.next', 'nextPage') &&
-                        showElem(
-                          'toolbar.toolbarViewerLeft.previous',
-                          'previousPage'
-                        )
+                      showElem(
+                        'toolbar.toolbarViewerLeft.previous',
+                        'previousPage'
+                      )
                     "
                     class="splitToolbarButtonSeparator"
                   ></div>
@@ -668,10 +668,7 @@
                         'toolbar.toolbarViewerMiddle.zoomIn',
                         'zoomIn'
                       ) &&
-                        showElem(
-                          'toolbar.toolbarViewerMiddle.zoomOut',
-                          'zoomOut'
-                        )
+                      showElem('toolbar.toolbarViewerMiddle.zoomOut', 'zoomOut')
                     "
                     class="splitToolbarButtonSeparator"
                   ></div>
@@ -852,11 +849,7 @@
             <button id="errorClose" data-l10n-id="error_close">Close</button>
           </div>
           <div class="clearBoth"></div>
-          <textarea
-            id="errorMoreInfo"
-            hidden="true"
-          readonly
-          ></textarea>
+          <textarea id="errorMoreInfo" hidden="true" readonly></textarea>
         </div>
       </div>
       <!-- mainContainer -->
@@ -980,7 +973,7 @@
               <progress value="0" max="100"></progress>
               <span
                 data-l10n-id="print_progress_percent"
-                data-l10n-args="{ 'progress': 0 }"
+                :data-l10n-args="JSON.stringify({ progress: 0 })"
                 class="relative-progress"
                 >0%</span
               >
@@ -1005,18 +998,18 @@
 </template>
 
 <script lang="ts">
-import '@/pdfjs-dist/es5/build/pdf'
-import * as pdfApp from '@/pdfjs-dist/lib/web/app'
-import { AppOptions } from '@/pdfjs-dist/lib/web/app_options'
-import '@/pdfjs-dist/lib/web/genericcom'
-import '@/pdfjs-dist/lib/web/pdf_print_service'
-import '@/pdfjs-dist/build/pdf.worker.entry'
-import '@/sass/index.scss'
-import { ToolbarConfig, Theme, ToolbarIdConfig, PageScale } from '@/types'
-import getAppConfig from '@/utils/pdf-config'
-import { PDF_FILE_INPUT_ID } from '@/utils/constants'
-import locale from '@/utils/locale'
-import { getToolbarConfigValue, toolbarConfig } from '@/utils/toolbar-config'
+import "@/pdfjs-dist/es5/build/pdf";
+import * as pdfApp from "@/pdfjs-dist/lib/web/app";
+import { AppOptions } from "@/pdfjs-dist/lib/web/app_options";
+import "@/pdfjs-dist/lib/web/genericcom";
+import "@/pdfjs-dist/lib/web/pdf_print_service";
+import "@/pdfjs-dist/build/pdf.worker.entry";
+import "@/sass/index.scss";
+import { ToolbarConfig, Theme, ToolbarIdConfig, PageScale } from "@/types";
+import getAppConfig from "@/utils/pdf-config";
+import { PDF_FILE_INPUT_ID } from "@/utils/constants";
+import locale from "@/utils/locale";
+import { getToolbarConfigValue, toolbarConfig } from "@/utils/toolbar-config";
 import {
   computed,
   defineComponent,
@@ -1024,27 +1017,33 @@ import {
   onMounted,
   PropType,
   ref,
-  watch
-} from 'vue'
+  watch,
+} from "vue";
 
-if (AppOptions) {
-  AppOptions.set('defaultUrl', null)
-}
+if (AppOptions) AppOptions.set("defaultUrl", null);
 
-const themeCacheKey = 'vue-pdf-app-theme'
-const errorHandler = console.error.bind(console)
+const themeCacheKey = "vue-pdf-app-theme";
+const errorHandler = console.error.bind(console);
+const pdfPrint = window.print.bind(window);
 
-// pdf_print_service reassigns window.print.
-// Assign original window.print on component destroy.
-// Once pdf is opened again assign window.print = pdfjs.print
-const pdfPrint = window.print.bind(window)
-window.print = (window as any).__nativePrint__ || pdfPrint
+window.print = (window as any).__nativePrint__ || pdfPrint;
+
+const getLocale = (lang: string, locale) => {
+  if (!(lang.toLowerCase() in locale.locales)) lang = "en";
+
+  return {
+    default_locale: lang.toLowerCase(),
+    locales: {
+      [lang.toLowerCase()]: locale.locales[lang.toLowerCase()],
+    },
+  };
+};
 
 export default defineComponent({
   props: {
     config: {
       default: () => toolbarConfig,
-      type: Object as PropType<ToolbarConfig>
+      type: Object as PropType<ToolbarConfig>,
     },
     title: { type: Boolean, default: () => false },
     pdf: { type: [String, ArrayBuffer] },
@@ -1052,236 +1051,261 @@ export default defineComponent({
     fileName: String,
     idConfig: { type: Object as PropType<ToolbarIdConfig> },
     pageScale: [Number, String] as PropType<PageScale>,
-    pageNumber: Number
+    pageNumber: Number,
+    locale: {
+      default: () => "en-us",
+      type: String,
+    },
   },
-  setup (props, ctx) {
-    const defaultLocale = ref(JSON.stringify(locale))
-    const isOpenHandlerBinded = ref(false)
-    const isSidebarHidden = ref(true)
-    const isFindbarHidden = ref(true)
+  /**
+   *
+   * SETUP
+   *
+   * @param {object} props
+   * @param {object} ctx
+   *
+   */
+  setup(props, ctx) {
+    const defaultLocale = ref(JSON.stringify(getLocale(props.locale, locale)));
+
+    const isOpenHandlerBinded = ref(false);
+    const isSidebarHidden = ref(true);
+    const isFindbarHidden = ref(true);
     const cacheTheme = ref(
       window.localStorage.getItem(themeCacheKey) as Theme | null
-    )
+    );
 
     const isSidebarToolbarHidden = computed(() => {
-      const idConfig = props.idConfig as ToolbarIdConfig
+      const idConfig = props.idConfig as ToolbarIdConfig;
       const isCustomToolbar =
         idConfig?.viewAttachments &&
         idConfig?.viewOutline &&
-        idConfig?.viewThumbnail
-      return isCustomToolbar || !props.config.sidebar
-    })
+        idConfig?.viewThumbnail;
+      return isCustomToolbar || !props.config.sidebar;
+    });
+
     const isToolbarHidden = computed(() => {
-      if (props.config.toolbar === false) return 'zero-top'
-      return ''
-    })
+      if (props.config.toolbar === false) return "zero-top";
+      return "";
+    });
+
     const localTheme = computed<Theme>(() => {
-      if (props.theme) return props.theme
-      if (cacheTheme.value) return cacheTheme.value
+      if (props.theme) return props.theme;
+      if (cacheTheme.value) return cacheTheme.value;
       const prefersTheme = window
         .getComputedStyle(document.documentElement)
-        .getPropertyValue('content')
-        .replace(/"/g, '') as Theme
-      if (['light', 'dark'].includes(prefersTheme)) return prefersTheme
-      return 'dark'
-    })
+        .getPropertyValue("content")
+        .replace(/"/g, "") as Theme;
+      if (["light", "dark"].includes(prefersTheme)) return prefersTheme;
+      return "dark";
+    });
     const slotProps = computed(() => {
       return {
         toggleTheme: toggleTheme,
         isSidebarHidden: isSidebarHidden.value,
-        isFindbarHidden: isFindbarHidden.value
-      }
-    })
+        isFindbarHidden: isFindbarHidden.value,
+      };
+    });
 
-    const toggleButtonUnmount = ref<Function>()
-    const findbarButtonUnmount = ref<Function>()
-    const fileInputUnmount = ref<Function>()
-    const printContainerUnmount = ref<Function>()
+    const toggleButtonUnmount = ref<Function>();
+    const findbarButtonUnmount = ref<Function>();
+    const fileInputUnmount = ref<Function>();
+    const printContainerUnmount = ref<Function>();
+
+    window.print = pdfPrint;
+    pdfApp.PDFViewerApplication.isViewerEmbedded = !props.title;
+    ctx.emit("after-created", pdfApp.PDFViewerApplication);
+
     onBeforeUnmount(() => {
-      destroyPdf()
+      destroyPdf();
       if (toggleButtonUnmount.value) {
-        toggleButtonUnmount.value()
+        toggleButtonUnmount.value();
       }
       if (findbarButtonUnmount.value) {
-        findbarButtonUnmount.value()
+        findbarButtonUnmount.value();
       }
       if (fileInputUnmount.value) {
-        fileInputUnmount.value()
+        fileInputUnmount.value();
       }
       if (printContainerUnmount.value) {
-        printContainerUnmount.value()
+        printContainerUnmount.value();
       }
-    })
+    });
 
-    window.print = pdfPrint
-    pdfApp.PDFViewerApplication.isViewerEmbedded = !props.title
-    ctx.emit('after-created', pdfApp.PDFViewerApplication)
+    onMounted(async () => {
+      addPrintContainer();
 
-    onMounted(() => {
-      addPrintContainer()
-      const config = getAppConfig(props.idConfig)
+      const config = getAppConfig(props.idConfig);
+
       if (pdfApp.PDFViewerApplication) {
-        pdfApp.PDFViewerApplication.run(config)
+        pdfApp.PDFViewerApplication.run(config);
         pdfApp.PDFViewerApplication.initializedPromise
           .then(setDefaultPageScale)
           .then(open)
           .then(bindSidebarToggleEvents)
           .then(bindFindbarToggleEvents)
-          .catch(errorHandler)
+          .catch(errorHandler);
       }
-    })
+    });
 
-    function bindSidebarToggleEvents () {
-      const config = getAppConfig(props.idConfig)
-      const toggleButton = config.sidebar.toggleButton
-      const handler = checkSidebarVisibility
-      toggleButton?.addEventListener('click', handler)
+    function bindSidebarToggleEvents() {
+      const config = getAppConfig(props.idConfig);
+      const toggleButton = config.sidebar.toggleButton;
+      const handler = checkSidebarVisibility;
+      toggleButton?.addEventListener("click", handler);
       toggleButtonUnmount.value = () => {
-        toggleButton?.removeEventListener('click', handler)
-      }
+        toggleButton?.removeEventListener("click", handler);
+      };
     }
-    function bindFindbarToggleEvents () {
-      const config = getAppConfig(props.idConfig)
-      const toggleButton = config.findBar.toggleButton
-      const handler = checkFindbarVisibility
-      toggleButton?.addEventListener('click', handler)
+
+    function bindFindbarToggleEvents() {
+      const config = getAppConfig(props.idConfig);
+      const toggleButton = config.findBar.toggleButton;
+      const handler = checkFindbarVisibility;
+      toggleButton?.addEventListener("click", handler);
       findbarButtonUnmount.value = () => {
-        toggleButton?.removeEventListener('click', handler)
-      }
+        toggleButton?.removeEventListener("click", handler);
+      };
     }
-    function bindOpenHandler () {
-      if (isOpenHandlerBinded.value) return
-      const fileInput = document.getElementById(PDF_FILE_INPUT_ID)
+
+    function bindOpenHandler() {
+      if (isOpenHandlerBinded.value) return;
+      const fileInput = document.getElementById(PDF_FILE_INPUT_ID);
       const fileInputHandler = async () => {
-        await pdfApp.PDFViewerApplication.pdfLoadingTask?.promise
-        openDocument()
-      }
-      fileInput?.addEventListener('change', fileInputHandler)
+        await pdfApp.PDFViewerApplication.pdfLoadingTask?.promise;
+        openDocument();
+      };
+      fileInput?.addEventListener("change", fileInputHandler);
       fileInputUnmount.value = () => {
-        fileInput?.removeEventListener('change', fileInputHandler)
-      }
-      isOpenHandlerBinded.value = true
+        fileInput?.removeEventListener("change", fileInputHandler);
+      };
+      isOpenHandlerBinded.value = true;
     }
-    function open () {
-      clearCacheTimeout()
-      if (!pdfApp.PDFViewerApplication) return
+
+    function open() {
+      clearCacheTimeout();
+      if (!pdfApp.PDFViewerApplication) return;
       if (!props.pdf) {
-        pdfApp.PDFViewerApplication.close()
+        pdfApp.PDFViewerApplication.close();
       } else {
         pdfApp.PDFViewerApplication.open(props.pdf)
           .then(() => {
             if (props.pageNumber) {
               setTimeout(
                 () => (pdfApp.PDFViewerApplication.page = props.pageNumber)
-              )
+              );
             }
-            return pdfApp.PDFViewerApplication.pdfDocument?.getMetadata()
+            return pdfApp.PDFViewerApplication.pdfDocument?.getMetadata();
           })
           .then(
             (fileMetadata: { contentDispositionFilename: null | string }) => {
               pdfApp.PDFViewerApplication.contentDispositionFilename =
-                props.fileName || fileMetadata.contentDispositionFilename
-              ctx.emit('pages-rendered', pdfApp.PDFViewerApplication)
+                props.fileName || fileMetadata.contentDispositionFilename;
+              ctx.emit("pages-rendered", pdfApp.PDFViewerApplication);
             }
           )
-          .catch(errorHandler)
+          .catch(errorHandler);
       }
     }
 
-    function checkSidebarVisibility () {
-      const sidebar = pdfApp.PDFViewerApplication?.pdfSidebar
-      isSidebarHidden.value = !(sidebar && sidebar.isOpen)
+    function checkSidebarVisibility() {
+      const sidebar = pdfApp.PDFViewerApplication?.pdfSidebar;
+      isSidebarHidden.value = !(sidebar && sidebar.isOpen);
     }
-    function checkFindbarVisibility () {
-      const findbar = pdfApp.PDFViewerApplication?.findBar
-      isFindbarHidden.value = !(findbar && findbar.opened)
+
+    function checkFindbarVisibility() {
+      const findbar = pdfApp.PDFViewerApplication?.findBar;
+      isFindbarHidden.value = !(findbar && findbar.opened);
     }
-    async function openDocument () {
-      resetLoadingBar()
-      ctx.emit('open', pdfApp.PDFViewerApplication)
+
+    async function openDocument() {
+      resetLoadingBar();
+      ctx.emit("open", pdfApp.PDFViewerApplication);
       if (pdfApp.PDFViewerApplication?.pdfViewer?.pagesPromise) {
         await pdfApp.PDFViewerApplication.pdfViewer.pagesPromise.catch(
           errorHandler
-        )
+        );
         if (props.pageNumber) {
           setTimeout(
             () => (pdfApp.PDFViewerApplication.page = props.pageNumber)
-          )
+          );
         }
-        checkSidebarVisibility()
-        checkFindbarVisibility()
-        ctx.emit('pages-rendered', pdfApp.PDFViewerApplication)
+        checkSidebarVisibility();
+        checkFindbarVisibility();
+        ctx.emit("pages-rendered", pdfApp.PDFViewerApplication);
       }
     }
 
-    function addPrintContainer () {
-      const printElId = 'printContainer'
-      const el = document.createElement('div')
-      el.id = printElId
-      document.body.appendChild(el)
-      const styleEl = document.createElement('style')
-      styleEl.type = 'text/css'
+    function addPrintContainer() {
+      const printElId = "printContainer";
+      const el = document.createElement("div");
+      el.id = printElId;
+      document.body.appendChild(el);
+      const styleEl = document.createElement("style");
+      styleEl.type = "text/css";
       styleEl.innerHTML = `
         @media print {
           body > *:not(#printContainer) {
             display: none !important;
         }
-      }`
-      document.head.appendChild(styleEl)
+      }`;
+      document.head.appendChild(styleEl);
       printContainerUnmount.value = () => {
-        document.body.removeChild(el)
-        document.head.removeChild(styleEl)
-      }
-    }
-    function destroyPdf (): void {
-      clearCacheTimeout()
-      pdfApp.PDFViewerApplication.unbindEvents()
-      pdfApp.PDFViewerApplication.unbindWindowEvents()
-      pdfApp.PDFViewerApplication.pdfDocument?.destroy()
-      const el = document.getElementById(PDF_FILE_INPUT_ID)
-      el && el.remove()
-      // __nativePrint__ is assigned in pdf_print_service.js
-      window.print = (window as any).__nativePrint__ || window.print
+        document.body.removeChild(el);
+        document.head.removeChild(styleEl);
+      };
     }
 
-    function toggleTheme () {
-      const newTheme = localTheme.value === 'dark' ? 'light' : 'dark'
-      ctx.emit('update:theme', newTheme)
-      cacheTheme.value = newTheme
-      window.localStorage.setItem(themeCacheKey, newTheme)
+    function destroyPdf(): void {
+      clearCacheTimeout();
+      pdfApp.PDFViewerApplication.unbindEvents();
+      pdfApp.PDFViewerApplication.unbindWindowEvents();
+      pdfApp.PDFViewerApplication.pdfDocument?.destroy();
+      const el = document.getElementById(PDF_FILE_INPUT_ID);
+      el && el.remove();
+
+      window.print = (window as any).__nativePrint__ || window.print;
     }
 
-    function clearCacheTimeout () {
+    function toggleTheme() {
+      const newTheme = localTheme.value === "dark" ? "light" : "dark";
+      ctx.emit("update:theme", newTheme);
+      cacheTheme.value = newTheme;
+      window.localStorage.setItem(themeCacheKey, newTheme);
+    }
+
+    function clearCacheTimeout() {
       const cacheTimeoutId =
-        pdfApp.PDFViewerApplication.pdfRenderingQueue?.idleTimeout
-      clearTimeout(cacheTimeoutId)
-    }
-    function getScale (value: number): string {
-      return `{ "scale": ${value} }`
+        pdfApp.PDFViewerApplication.pdfRenderingQueue?.idleTimeout;
+      clearTimeout(cacheTimeoutId);
     }
 
-    function showElem (
+    function getScale(value: number): string {
+      return `{ "scale": ${value} }`;
+    }
+
+    function showElem(
       defaultToolbarPath: string,
       customToolbarElem?: keyof ToolbarIdConfig
     ): boolean {
       if (customToolbarElem && props.idConfig) {
-        return !props.idConfig[customToolbarElem]
+        return !props.idConfig[customToolbarElem];
       }
       return !(
         getToolbarConfigValue(props.config, defaultToolbarPath) === false
-      )
+      );
     }
 
-    function setDefaultPageScale () {
-      props.pageScale && AppOptions.set('defaultZoomValue', props.pageScale)
+    function setDefaultPageScale() {
+      props.pageScale && AppOptions.set("defaultZoomValue", props.pageScale);
     }
 
-    function resetLoadingBar () {
-      pdfApp.PDFViewerApplication.loadingBar.show()
-      pdfApp.PDFViewerApplication.loadingBar.percent = 0
+    function resetLoadingBar() {
+      pdfApp.PDFViewerApplication.loadingBar.show();
+      pdfApp.PDFViewerApplication.loadingBar.percent = 0;
     }
 
-    watch(() => props.pdf, open)
+    watch(() => props.pdf, open);
 
     return {
       showElem,
@@ -1291,10 +1315,10 @@ export default defineComponent({
       isSidebarToolbarHidden,
       localTheme,
       defaultLocale,
-      bindOpenHandler
-    }
-  }
-})
+      bindOpenHandler,
+    };
+  },
+});
 </script>
 
 <style>

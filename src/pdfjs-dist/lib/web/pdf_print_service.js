@@ -24,7 +24,7 @@
 window.__nativePrint__ = window.print.bind(window);
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.PDFPrintService = PDFPrintService;
 
@@ -39,7 +39,8 @@ let overlayManager = null;
 
 function renderPage(activeServiceOnEntry, pdfDocument, pageNumber, size) {
   const scratchCanvas = activeService.scratchCanvas;
-  const PRINT_RESOLUTION = _app_options.AppOptions.get("printResolution") || 150;
+  const PRINT_RESOLUTION =
+    _app_options.AppOptions.get("printResolution") || 150;
   const PRINT_UNITS = PRINT_RESOLUTION / 72.0;
   scratchCanvas.width = Math.floor(size.width * PRINT_UNITS);
   scratchCanvas.height = Math.floor(size.height * PRINT_UNITS);
@@ -50,23 +51,26 @@ function renderPage(activeServiceOnEntry, pdfDocument, pageNumber, size) {
   ctx.fillStyle = "rgb(255, 255, 255)";
   ctx.fillRect(0, 0, scratchCanvas.width, scratchCanvas.height);
   ctx.restore();
-  return pdfDocument.getPage(pageNumber).then(function (pdfPage) {
-    const renderContext = {
-      canvasContext: ctx,
-      transform: [PRINT_UNITS, 0, 0, PRINT_UNITS, 0, 0],
-      viewport: pdfPage.getViewport({
-        scale: 1,
-        rotation: size.rotation
-      }),
-      intent: "print"
-    };
-    return pdfPage.render(renderContext).promise;
-  }).then(function () {
-    return {
-      width,
-      height
-    };
-  });
+  return pdfDocument
+    .getPage(pageNumber)
+    .then(function (pdfPage) {
+      const renderContext = {
+        canvasContext: ctx,
+        transform: [PRINT_UNITS, 0, 0, PRINT_UNITS, 0, 0],
+        viewport: pdfPage.getViewport({
+          scale: 1,
+          rotation: size.rotation,
+        }),
+        intent: "print",
+      };
+      return pdfPage.render(renderContext).promise;
+    })
+    .then(function () {
+      return {
+        width,
+        height,
+      };
+    });
 }
 
 function PDFPrintService(pdfDocument, pagesOverview, printContainer, l10n) {
@@ -74,7 +78,8 @@ function PDFPrintService(pdfDocument, pagesOverview, printContainer, l10n) {
   this.pagesOverview = pagesOverview;
   this.printContainer = printContainer;
   this.l10n = l10n || _ui_utils.NullL10n;
-  this.disableCreateObjectURL = pdfDocument.loadingParams["disableCreateObjectURL"];
+  this.disableCreateObjectURL =
+    pdfDocument.loadingParams["disableCreateObjectURL"];
   this.currentPage = -1;
   this.scratchCanvas = document.createElement("canvas");
 }
@@ -85,16 +90,29 @@ PDFPrintService.prototype = {
     const body = document.querySelector("body");
     body.setAttribute("data-pdfjsprinting", true);
     const hasEqualPageSizes = this.pagesOverview.every(function (size) {
-      return size.width === this.pagesOverview[0].width && size.height === this.pagesOverview[0].height;
+      return (
+        size.width === this.pagesOverview[0].width &&
+        size.height === this.pagesOverview[0].height
+      );
     }, this);
 
     if (!hasEqualPageSizes) {
-      console.warn("Not all pages have the same size. The printed " + "result may be incorrect!");
+      console.warn(
+        "Not all pages have the same size. The printed " +
+          "result may be incorrect!"
+      );
     }
 
     this.pageStyleSheet = document.createElement("style");
     const pageSize = this.pagesOverview[0];
-    this.pageStyleSheet.textContent = "@supports ((size:A4) and (size:1pt 1pt)) {" + "@page { size: " + pageSize.width + "pt " + pageSize.height + "pt;}" + "}";
+    this.pageStyleSheet.textContent =
+      "@supports ((size:A4) and (size:1pt 1pt)) {" +
+      "@page { size: " +
+      pageSize.width +
+      "pt " +
+      pageSize.height +
+      "pt;}" +
+      "}";
     body.appendChild(this.pageStyleSheet);
   },
 
@@ -138,9 +156,11 @@ PDFPrintService.prototype = {
 
       const index = this.currentPage;
       renderProgress(index, pageCount, this.l10n);
-      renderPage(this, this.pdfDocument, index + 1, this.pagesOverview[index]).then(this.useRenderedPage.bind(this)).then(function () {
-        renderNextPage(resolve, reject);
-      }, reject);
+      renderPage(this, this.pdfDocument, index + 1, this.pagesOverview[index])
+        .then(this.useRenderedPage.bind(this))
+        .then(function () {
+          renderNextPage(resolve, reject);
+        }, reject);
     };
 
     return new Promise(renderNextPage);
@@ -172,7 +192,7 @@ PDFPrintService.prototype = {
 
   performPrint() {
     this.throwIfInactive();
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       setTimeout(() => {
         if (!this.active) {
           resolve();
@@ -193,8 +213,7 @@ PDFPrintService.prototype = {
     if (!this.active) {
       throw new Error("This print request was cancelled or completed.");
     }
-  }
-
+  },
 };
 const print = window.print;
 
@@ -224,13 +243,17 @@ window.print = function () {
     }
 
     const activeServiceOnEntry = activeService;
-    activeService.renderPages().then(function () {
-      return activeServiceOnEntry.performPrint();
-    }).catch(function () {}).then(function () {
-      if (activeServiceOnEntry.active) {
-        abort();
-      }
-    });
+    activeService
+      .renderPages()
+      .then(function () {
+        return activeServiceOnEntry.performPrint();
+      })
+      .catch(function () {})
+      .then(function () {
+        if (activeServiceOnEntry.active) {
+          abort();
+        }
+      });
   }
 };
 
@@ -249,29 +272,45 @@ function abort() {
 
 function renderProgress(index, total, l10n) {
   const progressContainer = document.getElementById("printServiceOverlay");
-  const progress = Math.round(100 * index / total);
+  const progress = Math.round((100 * index) / total);
   const progressBar = progressContainer.querySelector("progress");
   const progressPerc = progressContainer.querySelector(".relative-progress");
   progressBar.value = progress;
-  l10n.get("print_progress_percent", {
-    progress
-  }, progress + "%").then(msg => {
-    progressPerc.textContent = msg;
-  });
+
+  l10n
+    .get(
+      "print_progress_percent",
+      {
+        progress,
+      },
+      progress + "%"
+    )
+    .then((msg) => {
+      progressPerc.textContent = msg;
+    });
 }
 
-window.addEventListener("keydown", function (event) {
-  if (event.keyCode === 80 && (event.ctrlKey || event.metaKey) && !event.altKey && (!event.shiftKey || window.chrome || window.opera)) {
-    window.print();
-    event.preventDefault();
+window.addEventListener(
+  "keydown",
+  function (event) {
+    if (
+      event.keyCode === 80 &&
+      (event.ctrlKey || event.metaKey) &&
+      !event.altKey &&
+      (!event.shiftKey || window.chrome || window.opera)
+    ) {
+      window.print();
+      event.preventDefault();
 
-    if (event.stopImmediatePropagation) {
-      event.stopImmediatePropagation();
-    } else {
-      event.stopPropagation();
+      if (event.stopImmediatePropagation) {
+        event.stopImmediatePropagation();
+      } else {
+        event.stopPropagation();
+      }
     }
-  }
-}, true);
+  },
+  true
+);
 
 if ("onbeforeprint" in window) {
   const stopPropagationIfNeeded = function (event) {
@@ -294,7 +333,12 @@ function ensureOverlay() {
       throw new Error("The overlay manager has not yet been initialized.");
     }
 
-    overlayPromise = overlayManager.register("printServiceOverlay", document.getElementById("printServiceOverlay"), abort, true);
+    overlayPromise = overlayManager.register(
+      "printServiceOverlay",
+      document.getElementById("printServiceOverlay"),
+      abort,
+      true
+    );
     document.getElementById("printCancel").onclick = abort;
   }
 
@@ -309,8 +353,12 @@ _app.PDFPrintServiceFactory.instance = {
       throw new Error("The print service is created and active.");
     }
 
-    activeService = new PDFPrintService(pdfDocument, pagesOverview, printContainer, l10n);
+    activeService = new PDFPrintService(
+      pdfDocument,
+      pagesOverview,
+      printContainer,
+      l10n
+    );
     return activeService;
-  }
-
+  },
 };

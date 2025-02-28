@@ -2117,7 +2117,7 @@ var Font = function FontClosure() {
           }
 
           if (ttContext.functionsUsed[j] && !ttContext.functionsDefined[j]) {
-            (0, _util.warn)("TT: undefined function: " + j);
+            // (0, _util.warn)("TT: undefined function: " + j);
             ttContext.hintsValid = false;
             return;
           }
