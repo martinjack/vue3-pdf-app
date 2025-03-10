@@ -1205,7 +1205,7 @@ const PDFWorker = (function PDFWorkerClosure() {
       }
 
       if (_is_node.isNodeJS && typeof require === "function") {
-        const worker = eval("require")(getWorkerSrc());
+        const worker = require(require.resolve(_getWorkerSrc()));
         return worker.WorkerMessageHandler;
       }
 

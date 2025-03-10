@@ -7,6 +7,7 @@ module.exports = defineConfig({
   configureWebpack: (config) => {
     if (process.env.NODE_ENV === "production") {
       config.optimization = { minimize: true };
+      config.devtool = false;
     } else {
       config.devtool = "source-map";
     }

@@ -14429,7 +14429,7 @@
                             break;
                           }
 
-                          worker = eval("require")(_getWorkerSrc());
+                          worker = require(require.resolve(_getWorkerSrc()));
                           return _context.abrupt(
                             "return",
                             worker.WorkerMessageHandler
