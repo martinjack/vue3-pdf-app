@@ -52,6 +52,11 @@ npm run serve
 npm run build
 ```
 
+## Build NPM
+```
+npm run build:npm
+```
+
 ## Usage
 
 ```vue
