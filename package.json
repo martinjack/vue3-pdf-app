@@ -1,6 +1,6 @@
 {
   "name": "@jackmartin/vue3-pdf-app",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Vue 3 PDF viewer",
   "main": "dist/vue3-pdf-app.umd.js",
   "unpkg": "dist/vue3-pdf-app.umd.min.js",
