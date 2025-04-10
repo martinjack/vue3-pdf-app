@@ -2,9 +2,10 @@
 
 Vue 3 PDF viewer based on Mozilla's PDFJS. Forked from https://github.com/sandanat/VuePdfApp.
 
-[![npm (tag)](https://img.shields.io/npm/v/@jackmartin/vue3-pdf-app/latest)](https://www.npmjs.com/package/@jackmartin/vue3-pdf-app)
+[![npm (tag)](https://img.shields.io/npm/v/@jackmartin/vue3-pdf-app/latest)](https://www.npmjs.com/package/@jackmartin/vue3-pdf-app) ![NPM Downloads](https://img.shields.io/npm/dm/%40jackmartin%2Fvue3-pdf-app)
 
-100% PDFJS functionality:
+
+### 100% PDFJS functionality:
 
 - zoom
 - open
@@ -40,6 +41,17 @@ Vue 3 PDF viewer based on Mozilla's PDFJS. Forked from https://github.com/sandan
 ```
 npm install @jackmartin/vue3-pdf-app
 ```
+
+## Debug
+```
+npm run serve
+```
+
+## Build
+```
+npm run build
+```
+
 ## Usage
 
 ```vue
@@ -99,6 +111,12 @@ export default {
 };
 </script>
 ```
+
+## Methods toolbar
+* [print](#print)
+* [download](#download)
+* [openFile](#openfile)
+* [fullscreen](#fullscreen)
 
 ## API
 
@@ -794,6 +812,178 @@ Use `<link rel="resource" type="application/l10n" href="path-to-localization-fil
 See [localization file examples](https://github.com/mozilla/pdf.js/tree/master/l10n "file examples").
 
 ## Examples
+
+### print
+```vue
+<template>
+  <VuePdfApp ref="pdf" style="height: 100vh;" pdf="https://pdfobject.com/pdf/sample.pdf" :config="config"/>
+
+  <button @click="printPDF">Print PDF</button>
+</template>
+
+<script>
+import VuePdfApp from "vue3-pdf-app";
+// import this to use default icons for buttons
+import "vue3-pdf-app/dist/icons/main.css";
+
+export default {
+  components: {
+    VuePdfApp
+  },
+  data() {
+    return {
+      config: {
+        sidebar: false,
+        secondaryToolbar: false,
+        toolbar: {
+            toolbarViewerLeft: false,
+            toolbarViewerRight: {
+                openFile: false,
+                viewBookmark: false,
+            },
+            secondaryToolbarToggle: false,
+        },
+      }
+    };
+  }
+  methods: {
+    printPDF() {
+      this.$refs.pdf.print();
+    },
+  }
+};
+</script>
+```
+
+### download
+
+```vue
+<template>
+  <VuePdfApp ref="pdf" style="height: 100vh;" pdf="https://pdfobject.com/pdf/sample.pdf" :config="config"/>
+
+  <button @click="downloadPDF">Download PDF</button>
+</template>
+
+<script>
+import VuePdfApp from "vue3-pdf-app";
+// import this to use default icons for buttons
+import "vue3-pdf-app/dist/icons/main.css";
+
+export default {
+  components: {
+    VuePdfApp
+  },
+  data() {
+    return {
+      config: {
+        sidebar: false,
+        secondaryToolbar: false,
+        toolbar: {
+            toolbarViewerLeft: false,
+            toolbarViewerRight: {
+                openFile: false,
+                viewBookmark: false,
+            },
+            secondaryToolbarToggle: false,
+        },
+      }
+    };
+  }
+  methods: {
+    downloadPDF() {
+      this.$refs.pdf.download();
+    },
+  }
+};
+</script>
+```
+
+### openFile
+
+```vue
+<template>
+  <VuePdfApp ref="pdf" style="height: 100vh;" pdf="https://pdfobject.com/pdf/sample.pdf" :config="config"/>
+
+  <button @click="openFile">Open PDF</button>
+</template>
+
+<script>
+import VuePdfApp from "vue3-pdf-app";
+// import this to use default icons for buttons
+import "vue3-pdf-app/dist/icons/main.css";
+
+export default {
+  components: {
+    VuePdfApp
+  },
+  data() {
+    return {
+      config: {
+        sidebar: false,
+        secondaryToolbar: false,
+        toolbar: {
+            toolbarViewerLeft: false,
+            toolbarViewerRight: {
+                openFile: false,
+                viewBookmark: false,
+            },
+            secondaryToolbarToggle: false,
+        },
+      }
+    };
+  }
+  methods: {
+    openFile() {
+      this.$refs.pdf.openFile();
+    },
+  }
+};
+</script>
+```
+
+### fullscreen
+
+```vue
+<template>
+  <VuePdfApp ref="pdf" style="height: 100vh;" pdf="https://pdfobject.com/pdf/sample.pdf" :config="config"/>
+
+  <button @click="fullScreen">Fullscreen PDF</button>
+</template>
+
+<script>
+import VuePdfApp from "vue3-pdf-app";
+// import this to use default icons for buttons
+import "vue3-pdf-app/dist/icons/main.css";
+
+export default {
+  components: {
+    VuePdfApp
+  },
+  data() {
+    return {
+      config: {
+        sidebar: false,
+        secondaryToolbar: false,
+        toolbar: {
+            toolbarViewerLeft: false,
+            toolbarViewerRight: {
+                openFile: false,
+                viewBookmark: false,
+            },
+            secondaryToolbarToggle: false,
+        },
+      }
+    };
+  }
+  methods: {
+    fullScreen() {
+      this.$refs.pdf.fullscreen();
+    },
+  }
+};
+</script>
+```
+
 ### Lazy loading
 
 PDFJS is a huge package (see the library size table above).

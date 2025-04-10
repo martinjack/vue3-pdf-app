@@ -1305,6 +1305,24 @@ export default defineComponent({
       pdfApp.PDFViewerApplication.loadingBar.percent = 0;
     }
 
+    function fullscreen() {
+      pdfApp.PDFViewerApplication.requestPresentationMode();
+    }
+
+    function openFile() {
+      document
+        .getElementById(pdfApp.PDFViewerApplication.appConfig.openFileInputName)
+        .click();
+    }
+
+    function print() {
+      window.print();
+    }
+
+    function download() {
+      pdfApp.PDFViewerApplication.download();
+    }
+
     watch(() => props.pdf, open);
 
     return {
@@ -1316,6 +1334,11 @@ export default defineComponent({
       localTheme,
       defaultLocale,
       bindOpenHandler,
+      print,
+      download,
+      openFile,
+      fullscreen,
+      application: pdfApp.PDFViewerApplication,
     };
   },
 });
